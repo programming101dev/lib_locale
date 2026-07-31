@@ -1,0 +1,13 @@
+function	test_kind	test_source
+p101_catclose	fault	test/test_fault_wrappers.c
+p101_catgets	fault	test/test_fault_wrappers.c
+p101_catopen	fault	test/test_fault_wrappers.c
+p101_duplocale	fault	test/test_fault_wrappers.c
+p101_iconv	fault	test/test_fault_wrappers.c
+p101_iconv_close	fault	test/test_fault_wrappers.c
+p101_iconv_open	fault	test/test_fault_wrappers.c
+p101_newlocale	fault	test/test_fault_wrappers.c
+p101_uselocale	fault	test/test_fault_wrappers.c
+p101_freelocale	behavior	test/test_behavior.c
+p101_nl_langinfo	behavior	test/test_behavior.c
+p101_nl_langinfo_l	behavior	test/test_behavior.c
