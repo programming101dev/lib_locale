@@ -15,20 +15,20 @@
  */
 
 #include "p101_locale/locale.h"
-#include <p101_c/p101_string.h>
 #include <p101_env/wrapper.h>
 
 static char *mutable_fallback(const struct p101_env *env, const char *fallback)
 {
-    char *result;
-
     /*
      * POSIX gives catgets() a const fallback argument but a mutable return
-     * type. Copying the pointer representation preserves that native contract
-     * without a cast that discards const.
+     * type. This cast is the exact system-interface boundary; callers must
+     * still treat the fallback as immutable when catgets() returns it.
      */
-    p101_memcpy(env, (void *)&result, (const void *)&fallback, sizeof(result));
-    return result;
+    P101_TRACE_SCOPE(env);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-qual"
+    return (char *)fallback;
+#pragma GCC diagnostic pop
 }
 
 int p101_catclose(const struct p101_env *env, struct p101_error *err, nl_catd catd)
