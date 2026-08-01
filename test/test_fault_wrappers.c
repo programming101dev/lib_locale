@@ -2,8 +2,10 @@
 #include <p101_env/env.h>
 #include <p101_error/error.h>
 #include <p101_locale/locale.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static int failures;
 
@@ -148,9 +150,9 @@ static void test_p101_iconv(struct p101_env *env, struct p101_error *err)
 #ifdef __linux__
     static const int errors[] = {E2BIG, EILSEQ, EINVAL};
 #elif defined(__APPLE__)
-    static const int errors[] = {E2BIG, EBADF, EILSEQ, EINVAL, ENOMEM};
+    static const int errors[] = {E2BIG, EBADF, EILSEQ, EINVAL};
 #elif defined(__FreeBSD__)
-    static const int errors[] = {E2BIG, EBADF, EILSEQ, EINVAL, ENOMEM};
+    static const int errors[] = {E2BIG, EBADF, EILSEQ, EINVAL};
 #else
     static const int errors[] = {E2BIG, EBADF, EILSEQ, EINVAL};
 #endif
@@ -177,7 +179,7 @@ static void test_p101_iconv_close(struct p101_env *env, struct p101_error *err)
 #elif defined(__APPLE__)
     static const int errors[] = {EBADF};
 #elif defined(__FreeBSD__)
-    static const int errors[] = {E2BIG, EBADF, EILSEQ, EINVAL, ENOMEM};
+    static const int errors[] = {EBADF};
 #else
     static const int errors[] = {EBADF};
 #endif
@@ -204,7 +206,7 @@ static void test_p101_iconv_open(struct p101_env *env, struct p101_error *err)
 #elif defined(__APPLE__)
     static const int errors[] = {EINVAL, EMFILE, ENFILE, ENOMEM};
 #elif defined(__FreeBSD__)
-    static const int errors[] = {E2BIG, EBADF, EILSEQ, EINVAL, ENOMEM};
+    static const int errors[] = {EINVAL, ENOMEM};
 #else
     static const int errors[] = {EINVAL, EMFILE, ENFILE, ENOMEM};
 #endif
