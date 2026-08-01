@@ -41,10 +41,13 @@ locale_t p101_duplocale(const struct p101_env *env, struct p101_error *err, loca
 
 void p101_freelocale(const struct p101_env *env, locale_t locobj)
 {
+    char resource_id[P101_ENV_POINTER_RESOURCE_ID_SIZE];
+
     P101_TRACE(env);
+    p101_env_pointer_resource_id(resource_id, sizeof(resource_id), locobj);
     errno = 0;
     freelocale(locobj);
-    P101_TRACK_POINTER_RESOURCE_RELEASE(env, "locale", locobj, NULL);
+    P101_TRACK_RESOURCE_RELEASE(env, "locale", resource_id, NULL);
     P101_TRACE_EXIT(env);
 }
 
