@@ -22,7 +22,7 @@ size_t p101_iconv(const struct p101_env *env, struct p101_error *err, iconv_t cd
     size_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (size_t)-1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (size_t)-1);
     errno   = 0;
     ret_val = iconv(cd, inbuf, inbytesleft, outbuf, outbytesleft);
 
@@ -31,7 +31,7 @@ size_t p101_iconv(const struct p101_env *env, struct p101_error *err, iconv_t cd
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -41,7 +41,7 @@ int p101_iconv_close(const struct p101_env *env, struct p101_error *err, iconv_t
     int  ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     p101_env_pointer_resource_id(resource_id, sizeof(resource_id), cd);
     errno   = 0;
     ret_val = iconv_close(cd);
@@ -55,7 +55,7 @@ int p101_iconv_close(const struct p101_env *env, struct p101_error *err, iconv_t
         P101_TRACK_RESOURCE_RELEASE(env, "iconv-descriptor", resource_id, NULL);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -64,7 +64,7 @@ iconv_t p101_iconv_open(const struct p101_env *env, struct p101_error *err, cons
     iconv_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (iconv_t)-1);    // NOLINT(performance-no-int-to-ptr)
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (iconv_t)-1);    // NOLINT(performance-no-int-to-ptr)
     errno   = 0;
     ret_val = iconv_open(tocode, fromcode);
 
@@ -77,6 +77,6 @@ iconv_t p101_iconv_open(const struct p101_env *env, struct p101_error *err, cons
         P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "iconv-descriptor", ret_val, 0U, NULL);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }

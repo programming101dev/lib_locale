@@ -36,7 +36,7 @@ int p101_catclose(const struct p101_env *env, struct p101_error *err, nl_catd ca
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = catclose(catd);
 
@@ -45,7 +45,7 @@ int p101_catclose(const struct p101_env *env, struct p101_error *err, nl_catd ca
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -54,7 +54,7 @@ char *p101_catgets(const struct p101_env *env, struct p101_error *err, nl_catd c
     char *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, mutable_fallback(env, s));
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, mutable_fallback(env, s));
     errno   = 0;
     ret_val = catgets(catd, set_id, msg_id, s);
 
@@ -63,7 +63,7 @@ char *p101_catgets(const struct p101_env *env, struct p101_error *err, nl_catd c
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -72,7 +72,7 @@ nl_catd p101_catopen(const struct p101_env *env, struct p101_error *err, const c
     nl_catd ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (nl_catd)-1);    // NOLINT(performance-no-int-to-ptr)
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (nl_catd)-1);    // NOLINT(performance-no-int-to-ptr)
     errno   = 0;
     ret_val = catopen(name, oflag);
 
@@ -81,6 +81,6 @@ nl_catd p101_catopen(const struct p101_env *env, struct p101_error *err, const c
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }

@@ -22,7 +22,7 @@ locale_t p101_duplocale(const struct p101_env *env, struct p101_error *err, loca
     locale_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (locale_t)0);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (locale_t)0);
     errno   = 0;
     ret_val = duplocale(locobj);
 
@@ -35,7 +35,7 @@ locale_t p101_duplocale(const struct p101_env *env, struct p101_error *err, loca
         P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "locale", ret_val, 0U, "duplicate");
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -56,7 +56,7 @@ locale_t p101_newlocale(const struct p101_env *env, struct p101_error *err, int 
     locale_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (locale_t)0);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (locale_t)0);
     errno   = 0;
     ret_val = newlocale(category_mask, locale, base);
 
@@ -73,7 +73,7 @@ locale_t p101_newlocale(const struct p101_env *env, struct p101_error *err, int 
         P101_TRACK_POINTER_RESOURCE_REPLACE(env, "locale", base, ret_val, 0U, "newlocale-base");
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -82,7 +82,7 @@ locale_t p101_uselocale(const struct p101_env *env, struct p101_error *err, loca
     locale_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (locale_t)0);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (locale_t)0);
     errno   = 0;
     ret_val = uselocale(newloc);
 
@@ -91,6 +91,6 @@ locale_t p101_uselocale(const struct p101_env *env, struct p101_error *err, loca
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
