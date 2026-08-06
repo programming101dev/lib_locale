@@ -19,10 +19,7 @@ set(BSD_STANDARD_FLAGS -D_BSD_SOURCE -D__BSD_VISIBLE)
 
 set(LIBRARY_TARGETS p101_locale)
 set(p101_locale_SOURCES
-        src/posix/iconv.c
-        src/posix/langinfo.c
-        src/posix/locale.c
-        src/posix/nl_types.c
+        src/locale.c
 )
 set(p101_locale_HEADERS
         include/p101_locale/locale.h

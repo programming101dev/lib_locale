@@ -1,13 +1,13 @@
-function	test_kind	test_source
-p101_catclose	fault	test/test_fault_wrappers.c
-p101_catgets	fault	test/test_fault_wrappers.c
-p101_catopen	fault	test/test_fault_wrappers.c
-p101_duplocale	fault	test/test_fault_wrappers.c
-p101_iconv	fault	test/test_fault_wrappers.c
-p101_iconv_close	fault	test/test_fault_wrappers.c
-p101_iconv_open	fault	test/test_fault_wrappers.c
-p101_newlocale	fault	test/test_fault_wrappers.c
-p101_uselocale	fault	test/test_fault_wrappers.c
-p101_freelocale	behavior	test/test_behavior.c
-p101_nl_langinfo	behavior	test/test_behavior.c
-p101_nl_langinfo_l	behavior	test/test_behavior.c
+function	function_usr	test_kind	test_source
+p101_catclose	c:@F@p101_catclose	fault	test/test_fault_wrappers.c
+p101_catgets	c:@F@p101_catgets	fault	test/test_fault_wrappers.c
+p101_catopen	c:@F@p101_catopen	fault	test/test_fault_wrappers.c
+p101_duplocale	c:@F@p101_duplocale	fault	test/test_fault_wrappers.c
+p101_iconv	c:@F@p101_iconv	fault	test/test_fault_wrappers.c
+p101_iconv_close	c:@F@p101_iconv_close	fault	test/test_fault_wrappers.c
+p101_iconv_open	c:@F@p101_iconv_open	fault	test/test_fault_wrappers.c
+p101_newlocale	c:@F@p101_newlocale	fault	test/test_fault_wrappers.c
+p101_uselocale	c:@F@p101_uselocale	fault	test/test_fault_wrappers.c
+p101_freelocale	c:@F@p101_freelocale	behavior	test/test_behavior.c
+p101_nl_langinfo	c:@F@p101_nl_langinfo	behavior	test/test_behavior.c
+p101_nl_langinfo_l	c:@F@p101_nl_langinfo_l	behavior	test/test_behavior.c

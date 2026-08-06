@@ -20,38 +20,41 @@ static int failures;
 
 int main(void)
 {
-    struct p101_error *err;
-    struct p101_env   *env;
-    locale_t           locale;
+    struct p101_error *err    = NULL;
+    struct p101_env   *env    = NULL;
+    locale_t           locale = (locale_t)0;
     char              *text;
+    int                status;
 
     err = p101_error_create(false);
-    if(err == NULL)
+    if(err != NULL)
     {
-        return EXIT_FAILURE;
+        env = p101_env_create(err, NULL);
     }
-    env = p101_env_create(err, NULL);
     if(env == NULL)
     {
-        p101_error_destroy(err);
-        return EXIT_FAILURE;
+        failures++;
     }
-    locale = p101_newlocale(env, err, LC_ALL_MASK, "C", (locale_t)0);
-    EXPECT(locale != (locale_t)0);
-    EXPECT(p101_error_has_no_error(err));
-
-    /* P101_TEST_CASE(p101_nl_langinfo) */
-    text = p101_nl_langinfo(env, CODESET);
-    EXPECT(text != NULL);
-    if(locale != (locale_t)0)
+    else
     {
-        /* P101_TEST_CASE(p101_nl_langinfo_l) */
-        text = p101_nl_langinfo_l(env, CODESET, locale);
+        locale = p101_newlocale(env, err, LC_ALL_MASK, "C", (locale_t)0);
+        EXPECT(locale != (locale_t)0);
+        EXPECT(p101_error_has_no_error(err));
+
+        /* P101_TEST_CASE(p101_nl_langinfo) */
+        text = p101_nl_langinfo(env, CODESET);
         EXPECT(text != NULL);
-        /* P101_TEST_CASE(p101_freelocale) */
-        p101_freelocale(env, locale);
+        if(locale != (locale_t)0)
+        {
+            /* P101_TEST_CASE(p101_nl_langinfo_l) */
+            text = p101_nl_langinfo_l(env, CODESET, locale);
+            EXPECT(text != NULL);
+            /* P101_TEST_CASE(p101_freelocale) */
+            p101_freelocale(env, locale);
+        }
     }
     p101_env_destroy(env);
     p101_error_destroy(err);
-    return failures == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
+    status = failures == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
+    return status;
 }
