@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-#include "p101_locale/p101_iconv.h"
-#include "p101_locale/p101_langinfo.h"
-#include "p101_locale/p101_locale.h"
 #include "p101_locale/p101_nl_types.h"
 #include <p101_env/wrapper.h>
 
