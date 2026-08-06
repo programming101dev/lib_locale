@@ -36,8 +36,6 @@
  * limitations under the License.
  */
 
-#include <p101_env/wrapper.h>
-
 size_t p101_iconv(const struct p101_env *env, struct p101_error *err, iconv_t cd, char **restrict inbuf, size_t *restrict inbytesleft, char **restrict outbuf, size_t *restrict outbytesleft)
 {
     size_t ret_val;
