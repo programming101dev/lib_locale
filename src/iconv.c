@@ -36,78 +36,66 @@
  * limitations under the License.
  */
 
-locale_t p101_duplocale(const struct p101_env *env, struct p101_error *err, locale_t locobj)
+#include <p101_env/wrapper.h>
+
+size_t p101_iconv(const struct p101_env *env, struct p101_error *err, iconv_t cd, char **restrict inbuf, size_t *restrict inbytesleft, char **restrict outbuf, size_t *restrict outbytesleft)
 {
-    locale_t ret_val;
+    size_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (locale_t)0);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (size_t)-1);
     errno   = 0;
-    ret_val = duplocale(locobj);
+    ret_val = iconv(cd, inbuf, inbytesleft, outbuf, outbytesleft);
 
-    if(ret_val == (locale_t)0)
+    if(ret_val == (size_t)-1)
     {
         P101_ERROR_RAISE_ERRNO(err, errno);
-    }
-    else
-    {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "locale", ret_val, 0U, "duplicate");
     }
 
     P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
-void p101_freelocale(const struct p101_env *env, locale_t locobj)
+int p101_iconv_close(const struct p101_env *env, struct p101_error *err, iconv_t cd)
 {
     char resource_id[P101_ENV_POINTER_RESOURCE_ID_SIZE];
+    int  ret_val;
 
     P101_TRACE(env);
-    p101_env_pointer_resource_id(resource_id, sizeof(resource_id), locobj);
-    errno = 0;
-    freelocale(locobj);
-    P101_TRACK_RESOURCE_RELEASE(env, "locale", resource_id, NULL);
-    P101_TRACE_EXIT(env);
-}
-
-locale_t p101_newlocale(const struct p101_env *env, struct p101_error *err, int category_mask, const char *locale, locale_t base)
-{
-    locale_t ret_val;
-
-    P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (locale_t)0);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
+    p101_env_pointer_resource_id(resource_id, sizeof(resource_id), cd);
     errno   = 0;
-    ret_val = newlocale(category_mask, locale, base);
+    ret_val = iconv_close(cd);
 
-    if(ret_val == (locale_t)0)
+    if(ret_val == -1)
     {
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
-    else if(base == (locale_t)0)
-    {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "locale", ret_val, 0U, "new");
-    }
     else
     {
-        P101_TRACK_POINTER_RESOURCE_REPLACE(env, "locale", base, ret_val, 0U, "newlocale-base");
+        P101_TRACK_RESOURCE_RELEASE(env, "iconv-descriptor", resource_id, NULL);
     }
 
     P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
-locale_t p101_uselocale(const struct p101_env *env, struct p101_error *err, locale_t newloc)
+iconv_t p101_iconv_open(const struct p101_env *env, struct p101_error *err, const char *tocode, const char *fromcode)
 {
-    locale_t ret_val;
+    iconv_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (locale_t)0);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (iconv_t)-1);    // NOLINT(performance-no-int-to-ptr)
     errno   = 0;
-    ret_val = uselocale(newloc);
+    ret_val = iconv_open(tocode, fromcode);
 
-    if(ret_val == (locale_t)0)
+    if(ret_val == (iconv_t)-1)    // NOLINT(performance-no-int-to-ptr)
     {
         P101_ERROR_RAISE_ERRNO(err, errno);
+    }
+    else
+    {
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "iconv-descriptor", ret_val, 0U, NULL);
     }
 
     P101_WRAPPER_DONE(env);

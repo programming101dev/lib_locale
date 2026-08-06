@@ -19,10 +19,16 @@ set(BSD_STANDARD_FLAGS -D_BSD_SOURCE -D__BSD_VISIBLE)
 
 set(LIBRARY_TARGETS p101_locale)
 set(p101_locale_SOURCES
+        src/iconv.c
+        src/langinfo.c
         src/locale.c
+        src/nl_types.c
 )
 set(p101_locale_HEADERS
-        include/p101_locale/locale.h
+        include/p101_locale/p101_iconv.h
+        include/p101_locale/p101_langinfo.h
+        include/p101_locale/p101_locale.h
+        include/p101_locale/p101_nl_types.h
 )
 set(p101_locale_LINK_LIBRARIES
         p101_error

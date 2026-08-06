@@ -1,6 +1,9 @@
 #include <p101_env/env.h>
 #include <p101_error/error.h>
-#include <p101_locale/locale.h>
+#include <p101_locale/p101_iconv.h>
+#include <p101_locale/p101_langinfo.h>
+#include <p101_locale/p101_locale.h>
+#include <p101_locale/p101_nl_types.h>
 #include <stdlib.h>
 
 int main(void)
