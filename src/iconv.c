@@ -15,6 +15,7 @@
  */
 
 #include "p101_locale/p101_iconv.h"
+#include <p101_env/resource_classes.h>
 #include <p101_env/wrapper.h>
 
 /*
@@ -53,12 +54,10 @@ size_t p101_iconv(const struct p101_env *env, struct p101_error *err, iconv_t cd
 
 int p101_iconv_close(const struct p101_env *env, struct p101_error *err, iconv_t cd)
 {
-    char resource_id[P101_ENV_POINTER_RESOURCE_ID_SIZE];
-    int  ret_val;
+    int ret_val;
 
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
-    p101_env_pointer_resource_id(resource_id, sizeof(resource_id), cd);
     errno   = 0;
     ret_val = iconv_close(cd);
 
@@ -68,7 +67,7 @@ int p101_iconv_close(const struct p101_env *env, struct p101_error *err, iconv_t
     }
     else
     {
-        P101_TRACK_RESOURCE_RELEASE(env, "iconv-descriptor", resource_id, NULL);
+        P101_TRACK_POINTER_RESOURCE_RELEASE(env, P101_RESOURCE_CLASS_ICONV_DESCRIPTOR, cd, NULL);
     }
 
     P101_WRAPPER_DONE(env);
@@ -90,7 +89,7 @@ iconv_t p101_iconv_open(const struct p101_env *env, struct p101_error *err, cons
     }
     else
     {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "iconv-descriptor", ret_val, 0U, NULL);
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, P101_RESOURCE_CLASS_ICONV_DESCRIPTOR, ret_val, 0U, NULL);
     }
 
     P101_WRAPPER_DONE(env);

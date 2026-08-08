@@ -15,6 +15,7 @@
  */
 
 #include "p101_locale/p101_locale.h"
+#include <p101_env/resource_classes.h>
 #include <p101_env/wrapper.h>
 
 /*
@@ -48,7 +49,7 @@ locale_t p101_duplocale(const struct p101_env *env, struct p101_error *err, loca
     }
     else
     {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "locale", ret_val, 0U, "duplicate");
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, P101_RESOURCE_CLASS_LOCALE, ret_val, 0U, "duplicate");
     }
 
     P101_WRAPPER_DONE(env);
@@ -57,13 +58,10 @@ locale_t p101_duplocale(const struct p101_env *env, struct p101_error *err, loca
 
 void p101_freelocale(const struct p101_env *env, locale_t locobj)
 {
-    char resource_id[P101_ENV_POINTER_RESOURCE_ID_SIZE];
-
     P101_TRACE(env);
-    p101_env_pointer_resource_id(resource_id, sizeof(resource_id), locobj);
     errno = 0;
     freelocale(locobj);
-    P101_TRACK_RESOURCE_RELEASE(env, "locale", resource_id, NULL);
+    P101_TRACK_POINTER_RESOURCE_RELEASE(env, P101_RESOURCE_CLASS_LOCALE, locobj, NULL);
     P101_TRACE_EXIT(env);
 }
 
@@ -82,11 +80,11 @@ locale_t p101_newlocale(const struct p101_env *env, struct p101_error *err, int 
     }
     else if(base == (locale_t)0)
     {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "locale", ret_val, 0U, "new");
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, P101_RESOURCE_CLASS_LOCALE, ret_val, 0U, "new");
     }
     else
     {
-        P101_TRACK_POINTER_RESOURCE_REPLACE(env, "locale", base, ret_val, 0U, "newlocale-base");
+        P101_TRACK_POINTER_RESOURCE_REPLACE(env, P101_RESOURCE_CLASS_LOCALE, base, ret_val, 0U, "newlocale-base");
     }
 
     P101_WRAPPER_DONE(env);
