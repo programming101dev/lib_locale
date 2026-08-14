@@ -1,0 +1,10 @@
+function	function_usr	domain	symbol_header	linux_faults	macos_faults	freebsd_faults	posix_faults	linux_conditional	macos_conditional	freebsd_conditional
+p101_catclose	c:@F@p101_catclose	errno	errno.h	EBADF,EINTR	EBADF	EBADF	EBADF,EINTR			
+p101_catgets	c:@F@p101_catgets	errno	errno.h	EBADF,EBADMSG,EINTR,EINVAL,ENOMSG	EBADF,EBADMSG	EBADF,EBADMSG	EBADF,EBADMSG,EINTR,EINVAL,ENOMSG			
+p101_catopen	c:@F@p101_catopen	errno	errno.h	EACCES,EMFILE,ENAMETOOLONG,ENFILE,ENOENT,ENOMEM,ENOTDIR	EINVAL,ENAMETOOLONG,ENOENT,ENOMEM	ENAMETOOLONG,ENOENT,ENOMEM	EACCES,EMFILE,ENAMETOOLONG,ENFILE,ENOENT,ENOMEM,ENOTDIR			
+p101_duplocale	c:@F@p101_duplocale	errno	errno.h	ENOMEM	ENOMEM	ENOMEM	ENOMEM			
+p101_iconv	c:@F@p101_iconv	errno	errno.h	E2BIG,EILSEQ,EINVAL	E2BIG,EBADF,EILSEQ,EINVAL	E2BIG,EBADF,EILSEQ,EINVAL	E2BIG,EBADF,EILSEQ,EINVAL			
+p101_iconv_close	c:@F@p101_iconv_close	errno	errno.h	EBADF	EBADF	EBADF	EBADF			
+p101_iconv_open	c:@F@p101_iconv_open	errno	errno.h	EINVAL	EINVAL,EMFILE,ENFILE,ENOMEM	EINVAL,ENOMEM	EINVAL,EMFILE,ENFILE,ENOMEM			
+p101_newlocale	c:@F@p101_newlocale	errno	errno.h	EINVAL,ENOENT,ENOMEM	EINVAL,ENOENT,ENOMEM	EINVAL,ENOENT,ENOMEM	EINVAL,ENOENT,ENOMEM			
+p101_uselocale	c:@F@p101_uselocale	errno	errno.h	EINVAL	EINVAL	EINVAL	EINVAL			
